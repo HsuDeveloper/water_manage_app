@@ -8,12 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.ToggleButton
 
 
 class frag1 : Fragment() {
     private lateinit var btn_water:Button
     private lateinit var text_water:TextView
-    private lateinit var text_cup:Button
+    private lateinit var text_cup:TextView
+    private lateinit var water_25:Button
+    private lateinit var water_50:Button
+    private lateinit var state_switch:ToggleButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,18 +31,48 @@ class frag1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //drink button
         btn_water = view.findViewById<Button>(R.id.water_button1)
-        text_water = view.findViewById<TextView>(R.id.water_percent1)
-        text_cup = view.findViewById<Button>(R.id.text_cup1)
 
+        //state switch
+        state_switch = view.findViewById<ToggleButton>(R.id.state)
+
+        //show text
+        text_water = view.findViewById<TextView>(R.id.water_percent1)
+        text_cup = view.findViewById<TextView>(R.id.text_cup1)
+
+        //fill button
+        water_25 = view.findViewById<Button>(R.id.water25)
+        water_50 = view.findViewById<Button>(R.id.water50)
+
+        //defalut value
         text_water.setText("${water_manage.get_water()}%")
         text_cup.setText("${water_manage.get_cup()} ml")
-        
+
+
+        //Click Listener
+        state_switch.setOnClickListener{
+            if(state_switch.isChecked()){
+                state_switch.setBackgroundResource(R.drawable.btn_star_big_on)
+            }
+            else{
+                state_switch.setBackgroundResource(R.drawable.btn_star_big_off)
+            }
+        }
 
         btn_water.setOnClickListener{
             water_manage.drink_water()
             text_water.setText("${water_manage.get_water()}%")
+            text_cup.setText("${water_manage.get_cup()} ml")
+        }
+
+        water_25.setOnClickListener {
+            water_manage.fill_cup(25)
+            text_cup.setText("${water_manage.get_cup()} ml")
+        }
+
+        water_50.setOnClickListener {
+            water_manage.fill_cup(50)
             text_cup.setText("${water_manage.get_cup()} ml")
         }
     }
