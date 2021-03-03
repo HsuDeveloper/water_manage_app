@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.ToggleButton
 
@@ -17,7 +18,7 @@ class frag1 : Fragment() {
     private lateinit var text_cup:TextView
     private lateinit var water_25:Button
     private lateinit var water_50:Button
-    private lateinit var state_switch:ToggleButton
+    private lateinit var water_bar:ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +35,6 @@ class frag1 : Fragment() {
         //drink button
         btn_water = view.findViewById<Button>(R.id.water_button1)
 
-        //state switch
-        state_switch = view.findViewById<ToggleButton>(R.id.state)
-
         //show text
         text_water = view.findViewById<TextView>(R.id.water_percent1)
         text_cup = view.findViewById<TextView>(R.id.text_cup1)
@@ -45,25 +43,21 @@ class frag1 : Fragment() {
         water_25 = view.findViewById<Button>(R.id.water25)
         water_50 = view.findViewById<Button>(R.id.water50)
 
+        //progress bar
+        water_bar = view.findViewById(R.id.water_progressBar)
+
         //defalut value
         text_water.setText("${water_manage.get_water()}%")
         text_cup.setText("${water_manage.get_cup()} ml")
-
+        water_bar.progress=0
 
         //Click Listener
-        state_switch.setOnClickListener{
-            if(state_switch.isChecked()){
-                state_switch.setBackgroundResource(R.drawable.btn_star_big_on)
-            }
-            else{
-                state_switch.setBackgroundResource(R.drawable.btn_star_big_off)
-            }
-        }
 
         btn_water.setOnClickListener{
             water_manage.drink_water()
             text_water.setText("${water_manage.get_water()}%")
             text_cup.setText("${water_manage.get_cup()} ml")
+            water_bar.progress=water_manage.get_water()
         }
 
         water_25.setOnClickListener {
