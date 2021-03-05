@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.ToggleButton
+import androidx.room.Room
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         val fragM = supportFragmentManager.beginTransaction()
         when(fragNum){
             0-> {fragM.replace(R.id.main_frame,frag1()).commit()}
-            1-> {fragM.replace(R.id.main_frame,frag2()).commit()}
         }
 
     }
